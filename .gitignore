@@ -1,0 +1,68 @@
+# Node modules
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and Editor files
+.DS_Store
+.vscode/
+.idea/
+.expo/
+.history/
+
+# Build artifacts
+android/build/
+ios/build/
+ios/Pods/
+ios/.xcode.env.local
+ios/*.xcworkspace
+ios/*.xcodeproj/project.xcworkspace/
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/xcshareddata/
+ios/*.xcodeproj/project.xcworkspace/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/xcshareddata/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Dependency caches
+.yarn-cache/
+.npm/
+
+# Metro Bundler cache
+.react-native/
+metro-cache/
+
+# React Native specific
+/android/app/build/
+/android/app/.gradle/
+/android/gradle/
+/android/local.properties
+/android/.idea/
+/android/.cxx/
+/android/captures/
+/android/generated/
+/android/platform-tools/
+/android/app/src/debug/
+/android/app/src/release/
+/android/app/src/main/assets/
+/android/app/src/main/res/
+/android/app/src/main/java/
+
+# Temp files
+*.tmp
+*.bak
+*.swp
+
+# Xcode derived data
+DerivedData/
+
+# Fastlane
+fastlane/report.xml
+fastlane/screenshots/

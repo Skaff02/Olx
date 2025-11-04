@@ -1,0 +1,16 @@
+current directory: /Users/joeyskaff/Desktop/OLX-Assessment/OLX/vendor/bundle/ruby/3.0.0/gems/nkf-0.2.0/ext/nkf
+/Users/joeyskaff/.rvm/rubies/ruby-3.0.0/bin/ruby -I /Users/joeyskaff/.rvm/rubies/ruby-3.0.0/lib/ruby/3.0.0 -r ./siteconf20251104-90535-mxx3rx.rb extconf.rb
+creating Makefile
+
+current directory: /Users/joeyskaff/Desktop/OLX-Assessment/OLX/vendor/bundle/ruby/3.0.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR=" clean
+
+current directory: /Users/joeyskaff/Desktop/OLX-Assessment/OLX/vendor/bundle/ruby/3.0.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR="
+compiling nkf.c
+linking shared-object nkf.bundle
+ld: warning: -multiply_defined is obsolete
+
+current directory: /Users/joeyskaff/Desktop/OLX-Assessment/OLX/vendor/bundle/ruby/3.0.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR=" install
+/opt/homebrew/opt/coreutils/bin/ginstall -c -m 0755 nkf.bundle ./.gem.20251104-90535-vtnuys
