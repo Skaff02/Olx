@@ -4,14 +4,14 @@ import { SvgXml } from 'react-native-svg'
 import fonts from '../../theme/fonts'
 import colors from '../../theme/colors'
 
-const Header = () => {
+const Header = ({ location }: { location: string }) => {
   return (
     <View style={styles.container}>
         <View style={styles.upperContainer}>
             <TouchableOpacity style={styles.locationContainer} activeOpacity={0.8}>
                 <SvgXml xml={Pin} height={18} />
                 <Text style={styles.locationText}>
-                    Lebanon
+                    {location}
                 </Text>
                 <SvgXml xml={ArrowDown} height={8} />
             </TouchableOpacity>
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     container: { 
         width: '100%',
         gap: 10,
+        paddingHorizontal: 16
     },
     upperContainer: {
         flexDirection: 'row',
