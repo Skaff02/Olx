@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import colors from '../../theme/colors'
 import fonts from '../../theme/fonts'
 import { useNavigation } from '@react-navigation/native'
 import CategoryService from '../../service/CategoryService'
-import { SvgXml } from 'react-native-svg'
+import CategoryItem from '../../components/sell/CategoryItem'
+import CategorySectionHeader from '../../components/sell/CategorySectionHeader'
 
 // Category images mapping
 const CATEGORY_IMAGES: { [key: string]: string } = {
@@ -30,7 +31,7 @@ const CATEGORY_IMAGES: { [key: string]: string } = {
 };
 
 const CreateAd = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const insets = useSafeAreaInsets()
 
   const [categories, setCategories] = useState<any[]>([]);
@@ -63,19 +64,9 @@ const CreateAd = () => {
   const popularCategories = categories.slice(0, 4);
   const otherCategories = categories.slice(4);
 
-  const renderCategoryItem = ({ item }: { item: any }) => (
-    <TouchableOpacity style={styles.categoryItem} activeOpacity={0.8}>
-      <Image source={{ uri: getCategoryImage(item.name, item.nameShort) }} style={styles.categoryImage} />
-      <Text style={styles.categoryName}>{item.nameShort || item.name}</Text>
-      <SvgXml xml={ArrowRightIcon} height={17} />
-    </TouchableOpacity>
-  );
-
-  const renderSectionHeader = (title: string) => (
-    <View style={styles.sectionHeader}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-    </View>
-  );
+  const handleCategoryPress = (item: any) => {
+    navigation.navigate('SubCategories', { category: item });
+  };
 
   return (
     <View style={styles.container}>
@@ -100,9 +91,9 @@ const CreateAd = () => {
           ]}
           renderItem={({ item }: any) => {
             if (item.type === 'section') {
-              return renderSectionHeader(item.title);
+              return <CategorySectionHeader title={item.title} />;
             }
-            return renderCategoryItem({ item: item.data });
+            return <CategoryItem item={item.data} onPress={handleCategoryPress} getCategoryImage={getCategoryImage} />;
           }}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={styles.listContainer}
@@ -153,37 +144,4 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingBottom: 20
   },
-  sectionHeader: {
-    paddingHorizontal: 16,
-    paddingTop: 20,
-    paddingBottom: 12,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontFamily: fonts.bold,
-    color: colors.text_dark,
-  },
-  categoryItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-  },
-  categoryImage: {
-    width: 50,
-    height: 50,
-    marginRight: 16,
-    resizeMode: 'contain',
-  },
-  categoryName: {
-    fontSize: 16,
-    fontFamily: fonts.semiBold,
-    color: colors.text_dark,
-    flex: 1,
-  },
 })
-
-const ArrowRightIcon = `<svg width="9" height="17" viewBox="0 0 9 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.75 0.75L8.25 8.25L0.75 15.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-`;

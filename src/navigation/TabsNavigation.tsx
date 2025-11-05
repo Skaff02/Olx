@@ -43,7 +43,7 @@ const TabsNavigation = () => {
                 listeners={({ navigation }) => ({
                     tabPress: (e) => {
                         e.preventDefault();
-                        navigation.navigate('CreateAd');
+                        navigation.navigate('SellStack');
                     },
                 })}
             />

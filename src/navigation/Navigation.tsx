@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from '../screens/tabs/Home'
 import TabsNavigation from './TabsNavigation'
-import CreateAd from '../screens/sell/CreateAd'
+import SellStackNavigation from './SellStackNavigation'
 
 const Stack = createNativeStackNavigator()
 
@@ -19,8 +19,8 @@ const Navigation = () => {
           >
             <Stack.Screen name="TabsNavigation" component={TabsNavigation} />
             <Stack.Screen 
-              name="CreateAd" 
-              component={CreateAd}
+              name="SellStack" 
+              component={SellStackNavigation}
               options={{
                 presentation: 'fullScreenModal',
                 animation: 'slide_from_bottom',
