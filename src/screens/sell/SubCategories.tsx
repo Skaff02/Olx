@@ -12,6 +12,8 @@ const SubCategories = ({navigation, route}: {navigation: any, route: any}) => {
   const handleSubCategoryPress = (item: any) => {
     if (item.children && item.children.length > 0) {
       navigation.push('SubCategories', { category: item });
+    } else {
+      navigation.navigate('AdDetails', { category: item });
     }
   };
 
