@@ -1,13 +1,13 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import fonts from '../theme/fonts';
-import colors from '../theme/colors';
-import Carousel from '../components/home/carousel/Carousel';
-import SectionHeader from '../components/home/shared/SectionHeader';
-import Categories from '../components/home/categories/Categories';
-import HorizontalProducts from '../components/home/products/HorizontalProducts';
-import Header from '../components/home/header/Header';
+import fonts from '../../theme/fonts';
+import colors from '../../theme/colors';
+import Carousel from '../../components/home/carousel/Carousel';
+import SectionHeader from '../../components/home/shared/SectionHeader';
+import Categories from '../../components/home/categories/Categories';
+import HorizontalProducts from '../../components/home/products/HorizontalProducts';
+import Header from '../../components/home/header/Header';
 
 const Home = () => {
     const insets = useSafeAreaInsets();
@@ -117,11 +117,11 @@ const Home = () => {
             location: { country: "Lebanon", city: "Akkar", area: "Halba" },
             created_at: "2025-10-23T08:49:25Z",
             images: [
-                "https://images.olx.com.lb/thumbnails/6fbd6505-c2e0-44fe-8d02-d7e87b745dd4-32a11ca7-85d4-4f-800x600.webp",
-                "https://images.olx.com.lb/thumbnails/6fbd6505-c2e0-44fe-8d02-d7e87b745dd4-40f16600-0a40-44-800x600.webp",
-                "https://images.olx.com.lb/thumbnails/6fbd6505-c2e0-44fe-8d02-d7e87b745dd4-1f879092-7904-45-800x600.webp",
-                "https://images.olx.com.lb/thumbnails/6fbd6505-c2e0-44fe-8d02-d7e87b745dd4-e1a9b0a7-08b1-49-800x600.webp",
-                "https://images.olx.com.lb/thumbnails/6fbd6505-c2e0-44fe-8d02-d7e87b745dd4-f6e7a90f-76f9-47-800x600.webp"
+                "https://images.olx.com.lb/thumbnails/15460261-800x600.webp",
+                "https://images.olx.com.lb/thumbnails/15460262-800x600.webp",
+                "https://images.olx.com.lb/thumbnails/15460263-800x600.webp",
+                "https://images.olx.com.lb/thumbnails/15460264-800x600.webp",
+                "https://images.olx.com.lb/thumbnails/15460265-800x600.webp"
             ]
         },
         {

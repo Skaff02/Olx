@@ -1,11 +1,11 @@
 import { View, Text, Platform } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Home from '../screens/Home'
+import Home from '../screens/tabs/Home'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Sell from '../screens/Sell'
+import Sell from '../screens/tabs/Sell'
 import colors from '../theme/colors'
-import Profile from '../screens/Profile'
+import Profile from '../screens/tabs/Profile'
 
 const Tab = createBottomTabNavigator()
 

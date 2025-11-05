@@ -6,27 +6,31 @@ import fonts from '../../../theme/fonts'
 import moment from 'moment'
 
 const ProductItem = ({ product }: { product: { id: string, name: string, price: number, currency: string, year?: number, mileage?: number, bedrooms?: number, bathrooms?: number, space?: number, location: { country: string, city: string, area: string }, created_at: string, images: string[] }  }   ) => {
+  const formatPrice = (price: number) => {
+    return price.toLocaleString('en-US');
+  };
+
   return (
     <View style={styles.container}>
         <Image source={{ uri: product.images[0] }} style={styles.image} />
         <View style={styles.priceSection}>
-            <Text style={styles.priceText}>USD {product.price}</Text>
+            <Text style={styles.priceText}>USD {formatPrice(product.price)}</Text>
             <TouchableOpacity activeOpacity={0.8}>
                 <SvgXml xml={HeartIcon} height={15} />
             </TouchableOpacity>
         </View>
         <Text style={styles.nameText} numberOfLines={1}>{product.name}</Text>
         {
-            product.year && product.mileage && (
+            (product.year !== undefined && product.mileage !== undefined) && (
                 <View style={styles.detailsSection}>
-                    <Text style={styles.detailsText}>{product.year} - {product.mileage} km</Text>
+                    <Text style={styles.detailsText}>{product.year} - {product.mileage.toLocaleString('en-US')} km</Text>
                 </View>
             )
         }
         {
-            product.bedrooms && product.bathrooms && product.space && (
+            (product.bedrooms !== undefined && product.bathrooms !== undefined && product.space !== undefined) && (
                 <View style={styles.detailsSection}>
-                    <Text style={styles.detailsText}>{product.bedrooms} BD | {product.bathrooms} BA | {product.space} m²</Text>
+                    <Text style={styles.detailsText}>{String(product.bedrooms)} BD | {String(product.bathrooms)} BA | {String(product.space)} m²</Text>
                 </View>
             )
         }
