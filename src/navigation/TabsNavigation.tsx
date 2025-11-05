@@ -13,34 +13,43 @@ const TabsNavigation = () => {
 
     const insets = useSafeAreaInsets();
 
-  return (
-    <Tab.Navigator
-                    initialRouteName="Home"
+    return (
+        <Tab.Navigator
+            initialRouteName="Home"
 
-                    screenOptions={{
-                        headerShown: false,
-                        tabBarActiveTintColor: colors.primary,
-                        tabBarInactiveTintColor: colors.text_dark,
-                        tabBarStyle: {
-                            paddingBottom: Platform.OS === 'ios'
-                                ? 10
-                                : 5,
-                            paddingTop: 15,
-                            borderTopWidth: 0,
-                            height: Platform.OS === 'ios' ? 100 : 70 + insets.bottom,
-                            backgroundColor: colors.background_dark,
-                        },
-                        tabBarShowLabel: true,
-                        tabBarIconStyle: {
-                            marginBottom: 4
-                        },
-                    }}
-                >   
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Sell" component={Sell} />
-        <Tab.Screen name="Profile" component={Profile} />
-    </Tab.Navigator>
-  )
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: colors.primary,
+                tabBarInactiveTintColor: colors.text_dark,
+                tabBarStyle: {
+                    paddingBottom: Platform.OS === 'ios'
+                        ? 10
+                        : 5,
+                    paddingTop: 15,
+                    borderTopWidth: 0,
+                    height: Platform.OS === 'ios' ? 100 : 70 + insets.bottom,
+                    backgroundColor: colors.background_dark,
+                },
+                tabBarShowLabel: true,
+                tabBarIconStyle: {
+                    marginBottom: 4
+                },
+            }}
+        >
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen 
+                name="Sell" 
+                component={Sell}
+                listeners={({ navigation }) => ({
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        navigation.navigate('CreateAd');
+                    },
+                })}
+            />
+            <Tab.Screen name="Profile" component={Profile} />
+        </Tab.Navigator>
+    )
 }
 
 export default TabsNavigation
