@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import fonts from '../../theme/fonts'
-import colors from '../../theme/colors'
+import fonts from '../../../theme/fonts'
+import colors from '../../../theme/colors'
 
 const SectionHeader = ({ title }: { title: string }) => {
   return (

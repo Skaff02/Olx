@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import fonts from '../../theme/fonts'
-import colors from '../../theme/colors'
+import fonts from '../../../theme/fonts'
+import colors from '../../../theme/colors'
 
 const CategoryItem = ({ category }: { category: { id: string, name: string, image: string } }) => {
   return (

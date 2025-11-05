@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import colors from '../../theme/colors'
+import colors from '../../../theme/colors'
 import { SvgXml } from 'react-native-svg'
-import fonts from '../../theme/fonts'
+import fonts from '../../../theme/fonts'
 import moment from 'moment'
 
 const ProductItem = ({ product }: { product: { id: string, name: string, price: number, currency: string, year?: number, mileage?: number, bedrooms?: number, bathrooms?: number, space?: number, location: { country: string, city: string, area: string }, created_at: string, images: string[] }  }   ) => {

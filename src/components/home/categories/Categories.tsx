@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import SectionHeader from './SectionHeader'
+import SectionHeader from '../shared/SectionHeader'
 import CategoryItem from './CategoryItem'
 
 const Categories = ({ categories }: { categories: { id: string, name: string, image: string }[] }) => {

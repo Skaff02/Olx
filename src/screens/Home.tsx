@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import fonts from '../theme/fonts';
 import colors from '../theme/colors';
-import Header from '../components/home/Header';
-import Carousel from '../components/home/Carousel';
-import SectionHeader from '../components/home/SectionHeader';
-import Categories from '../components/home/Categories';
-import HorizontalProducts from '../components/home/HorizontalProducts';
+import Carousel from '../components/home/carousel/Carousel';
+import SectionHeader from '../components/home/shared/SectionHeader';
+import Categories from '../components/home/categories/Categories';
+import HorizontalProducts from '../components/home/products/HorizontalProducts';
+import Header from '../components/home/header/Header';
 
 const Home = () => {
     const insets = useSafeAreaInsets();

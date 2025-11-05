@@ -1,8 +1,8 @@
 import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { SvgXml } from 'react-native-svg'
-import fonts from '../../theme/fonts'
-import colors from '../../theme/colors'
+import fonts from '../../../theme/fonts'
+import colors from '../../../theme/colors'
 
 const Header = ({ location }: { location: string }) => {
   return (
