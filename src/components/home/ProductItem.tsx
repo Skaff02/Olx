@@ -5,7 +5,7 @@ import { SvgXml } from 'react-native-svg'
 import fonts from '../../theme/fonts'
 import moment from 'moment'
 
-const ProductItem = ({ product }: { product: { id: string, name: string, price: number, currency: string, year?: number, mileage?: number, location: { country: string, city: string, area: string }, created_at: string, images: string[] }  }   ) => {
+const ProductItem = ({ product }: { product: { id: string, name: string, price: number, currency: string, year?: number, mileage?: number, bedrooms?: number, bathrooms?: number, space?: number, location: { country: string, city: string, area: string }, created_at: string, images: string[] }  }   ) => {
   return (
     <View style={styles.container}>
         <Image source={{ uri: product.images[0] }} style={styles.image} />
@@ -18,8 +18,15 @@ const ProductItem = ({ product }: { product: { id: string, name: string, price: 
         <Text style={styles.nameText} numberOfLines={1}>{product.name}</Text>
         {
             product.year && product.mileage && (
-                <View style={styles.yearMileageSection}>
-                    <Text style={styles.yearText}>{product.year} - {product.mileage} km</Text>
+                <View style={styles.detailsSection}>
+                    <Text style={styles.detailsText}>{product.year} - {product.mileage} km</Text>
+                </View>
+            )
+        }
+        {
+            product.bedrooms && product.bathrooms && product.space && (
+                <View style={styles.detailsSection}>
+                    <Text style={styles.detailsText}>{product.bedrooms} BD | {product.bathrooms} BA | {product.space} m²</Text>
                 </View>
             )
         }
@@ -67,13 +74,13 @@ const styles = StyleSheet.create({
         color: colors.text_dark,
         paddingHorizontal: 5,
     },
-    yearMileageSection: {
+    detailsSection: {
         flexDirection: 'row',
         paddingHorizontal: 5,
         paddingVertical: 4,
         gap: 8,
     },
-    yearText: {
+    detailsText: {
         fontSize: 12,
         fontFamily: fonts.regular,
         color: colors.text_gray,

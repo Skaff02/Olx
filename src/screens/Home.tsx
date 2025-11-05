@@ -286,12 +286,15 @@ const Home = () => {
             paddingTop: insets.top,
         }]}>
             <Header location={location} />
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 16}} contentContainerStyle={{paddingBottom: 16}} bounces={false}>
                 <Carousel />
                 <Categories categories={categories} />
                 <HorizontalProducts data={mobilePhones} title="Mobile Phones" />
                 <View style={{ marginTop: 5 }}>
                     <HorizontalProducts data={cars} title="Cars for Sale" />
+                </View>
+                <View style={{ marginTop: 5 }}>
+                    <HorizontalProducts data={properties} title="Properties for Sale" />
                 </View>
             </ScrollView>
         </View>

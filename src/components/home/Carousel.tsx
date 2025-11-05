@@ -91,7 +91,7 @@ export default Carousel;
 const styles = StyleSheet.create({
   container: {
     height: 200,
-    paddingVertical: 16
+    paddingBottom: 16
   },
   imageContainer: {
     width: SCREEN_WIDTH,
