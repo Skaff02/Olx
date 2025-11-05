@@ -90,33 +90,16 @@ export default Carousel;
 
 const styles = StyleSheet.create({
   container: {
-    height: 230,
+    height: 200,
     paddingVertical: 16
   },
   imageContainer: {
     width: SCREEN_WIDTH,
-    height: 230,
+    height: 200,
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-  },
-  pagination: {
-    flexDirection: 'row',
-    position: 'absolute',
-    bottom: 20,
-    alignSelf: 'center',
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    marginHorizontal: 4,
-  },
-  activeDot: {
-    backgroundColor: '#fff',
-    width: 24,
   },
 });

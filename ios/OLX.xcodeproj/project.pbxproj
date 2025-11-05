@@ -11,14 +11,15 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3C1E095181EE36C0B970FC10 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		76EFF6BF7F5A43418CB3F433 /* ElmsSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73F64AB6EBAF4935BC6B5700 /* ElmsSans-Regular.ttf */; };
+		7D651ED9AC304EF3A4220431 /* ElmsSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668219DB47A0478CAEE6D710 /* ElmsSans-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8F0DEF4CB0CD44A99ECD05AD /* ElmsSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 06F4CE35637D424BAB970E75 /* ElmsSans-Bold.ttf */; };
 		BAA1953776E947AEB1980D07 /* ElmsSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E02A01E5732E4066BE9E3189 /* ElmsSans-Medium.ttf */; };
-		76EFF6BF7F5A43418CB3F433 /* ElmsSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73F64AB6EBAF4935BC6B5700 /* ElmsSans-Regular.ttf */; };
-		7D651ED9AC304EF3A4220431 /* ElmsSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668219DB47A0478CAEE6D710 /* ElmsSans-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06F4CE35637D424BAB970E75 /* ElmsSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "ElmsSans-Bold.ttf"; path = "../assets/fonts/ElmsSans-Bold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* OLX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OLX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = OLX/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = OLX/Info.plist; sourceTree = "<group>"; };
@@ -26,13 +27,12 @@
 		3B4392A12AC88292D35C810B /* Pods-OLX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OLX.debug.xcconfig"; path = "Target Support Files/Pods-OLX/Pods-OLX.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-OLX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OLX.release.xcconfig"; path = "Target Support Files/Pods-OLX/Pods-OLX.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-OLX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OLX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		668219DB47A0478CAEE6D710 /* ElmsSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "ElmsSans-SemiBold.ttf"; path = "../assets/fonts/ElmsSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		73F64AB6EBAF4935BC6B5700 /* ElmsSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "ElmsSans-Regular.ttf"; path = "../assets/fonts/ElmsSans-Regular.ttf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = OLX/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = OLX/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E02A01E5732E4066BE9E3189 /* ElmsSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "ElmsSans-Medium.ttf"; path = "../assets/fonts/ElmsSans-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		06F4CE35637D424BAB970E75 /* ElmsSans-Bold.ttf */ = {isa = PBXFileReference; name = "ElmsSans-Bold.ttf"; path = "../assets/fonts/ElmsSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E02A01E5732E4066BE9E3189 /* ElmsSans-Medium.ttf */ = {isa = PBXFileReference; name = "ElmsSans-Medium.ttf"; path = "../assets/fonts/ElmsSans-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		73F64AB6EBAF4935BC6B5700 /* ElmsSans-Regular.ttf */ = {isa = PBXFileReference; name = "ElmsSans-Regular.ttf"; path = "../assets/fonts/ElmsSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		668219DB47A0478CAEE6D710 /* ElmsSans-SemiBold.ttf */ = {isa = PBXFileReference; name = "ElmsSans-SemiBold.ttf"; path = "../assets/fonts/ElmsSans-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
