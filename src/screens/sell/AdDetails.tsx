@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator, TouchableOpacity, Modal, Image, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../theme/colors'
 import fonts from '../../theme/fonts'
@@ -8,12 +8,17 @@ import SelectInput from '../../components/sell/form/SelectInput'
 import HorizontalChoice from '../../components/sell/form/HorizontalChoice'
 import Header from '../../components/shared/Header'
 import { SvgXml } from 'react-native-svg'
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 
 const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
   const { category } = route.params
   const [categoryFields, setCategoryFields] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [formData, setFormData] = useState<any>({})
+  const [showImageOptions, setShowImageOptions] = useState<boolean>(false)
+  const [selectedImages, setSelectedImages] = useState<any[]>([])
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false)
+  const [imageToDelete, setImageToDelete] = useState<number | null>(null)
 
   useEffect(() => {
     fetchCategoryFields()
@@ -22,24 +27,14 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
   const fetchCategoryFields = async () => {
     setLoading(true)
     try {
-      // Build category slugs from the category path
       const categorySlug = category.slug || ''
       
       const response = await CategoryFieldsService.getCategoryFields(categorySlug)
       
       if (response.status === 200) {
-        console.log('==========================================')
-        console.log('API Response:', response.data)
         
-        // The response is keyed by category ID, extract the fields
         const categoryId = category.id
         const fieldsData = response.data[categoryId]
-        
-        console.log('Category ID:', categoryId)
-        console.log('Fields Data:', fieldsData)
-        console.log('Has flatFields?', !!fieldsData?.flatFields)
-        console.log('flatFields length:', fieldsData?.flatFields?.length)
-        console.log('==========================================')
         
         setCategoryFields(fieldsData)
       }
@@ -50,18 +45,71 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
     }
   }
 
+  const handleTakePhoto = async () => {
+    setShowImageOptions(false)
+    
+    // Add delay to let modal fully close before launching camera
+    await new Promise(resolve => setTimeout(() => resolve(undefined), 300))
+    
+    const result = await launchCamera({
+      mediaType: 'photo',
+      quality: 0.8,
+      maxWidth: 1920,
+      maxHeight: 1920,
+    })
+    
+    if (result.assets && result.assets.length > 0) {
+      setSelectedImages([...selectedImages, ...result.assets])
+    }
+  }
+
+  const handlePickFromGallery = async () => {
+    setShowImageOptions(false)
+    
+    // Add delay to let modal fully close before launching gallery
+    await new Promise(resolve => setTimeout(() => resolve(undefined), 300))
+    
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      quality: 0.8,
+      maxWidth: 1920,
+      maxHeight: 1920,
+      selectionLimit: 10 - selectedImages.length, // Allow up to 10 images total
+    })
+    
+    if (result.assets && result.assets.length > 0) {
+      setSelectedImages([...selectedImages, ...result.assets])
+    }
+  }
+
+  const handleRemoveImage = (index: number) => {
+    setImageToDelete(index)
+    setShowDeleteConfirm(true)
+  }
+
+  const confirmDeleteImage = () => {
+    if (imageToDelete !== null) {
+      const newImages = selectedImages.filter((_, i) => i !== imageToDelete)
+      setSelectedImages(newImages)
+    }
+    setShowDeleteConfirm(false)
+    setImageToDelete(null)
+  }
+
+  const cancelDeleteImage = () => {
+    setShowDeleteConfirm(false)
+    setImageToDelete(null)
+  }
+
   const shouldShowField = (field: any) => {
-    // Filter out fields explicitly excluded from post ad form
     const excludeRoles = ['hidden', 'auto_assigned', 'exclude_from_post_an_ad']
     const hasExcludedRole = field.roles?.some((role: string) => excludeRoles.includes(role))
     
     if (hasExcludedRole) return false
     
-    // Exclude specific attributes that are search-only or auto-determined
     const excludeAttributes = ['price_type', 'payment_option']
     if (excludeAttributes.includes(field.attribute)) return false
     
-    // Filter out discount/promo fields (these are just tags, not real form fields)
     const isPromoField = field.attribute?.includes('save_') || 
                          field.attribute?.includes('_collection') ||
                          field.attribute === 'new' ||
@@ -123,13 +171,11 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
         )
       
       case 'enum_multiple':
-        // Multi-select field (like amenities/features)
         const selectedValues = formData[attribute] || []
         const selectedLabels = selectedValues
           .map((val: string) => choices?.find((c: any) => c.value === val)?.label)
           .filter(Boolean)
         
-        // Format display text
         let displayText = `Select ${name.toLowerCase()}`
         if (selectedLabels.length > 0) {
           if (selectedLabels.length <= 2) {
@@ -178,7 +224,6 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
       case 'enum':
         const choicesCount = choices?.length || 0
         
-        // If 2-3 choices, display as horizontal buttons
         if (choicesCount >= 2 && choicesCount <= 3) {
           return (
             <HorizontalChoice
@@ -191,10 +236,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
             />
           )
         }
-        
-        // Check if it's multiple_choice filter type (many options)
         if (filterType === 'multiple_choice' || choicesCount > 3) {
-          // Navigate to full screen selection
           const selectedChoice = choices?.find((c: any) => c.value === formData[attribute])
           return (
             <View key={id} style={styles.fieldContainer}>
@@ -219,7 +261,6 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
           )
         }
         
-        // Regular dropdown (shouldn't reach here but as fallback)
         return (
           <SelectInput
             key={id}
@@ -238,11 +279,6 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
   }
 
   const renderForm = () => {
-    console.log('==========================================')
-    console.log('renderForm called')
-    console.log('categoryFields:', categoryFields)
-    console.log('Has flatFields?', categoryFields?.flatFields)
-    console.log('==========================================')
     
     if (!categoryFields || !categoryFields.flatFields) {
       return (
@@ -254,34 +290,76 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
       )
     }
 
-    // Filter and sort fields by displayPriority
     const visibleFields = categoryFields.flatFields
       .filter(shouldShowField)
       .sort((a: any, b: any) => {
-        // Sort by displayPriority first
         if (a.displayPriority !== b.displayPriority) {
           return a.displayPriority - b.displayPriority
         }
-        // Then by isMandatory (mandatory first)
         if (a.isMandatory !== b.isMandatory) {
           return b.isMandatory ? 1 : -1
         }
-        // Then by id
         return a.id - b.id
       })
-    
-    console.log('==========================================')
-    console.log('Total fields:', categoryFields.flatFields.length)
-    console.log('Visible fields:', visibleFields.length)
-    console.log('Fields to display:')
-    visibleFields.forEach((field: any) => {
-      console.log(`- ${field.attribute} (${field.name}) - priority: ${field.displayPriority}, mandatory: ${field.isMandatory}`)
-    })
-    console.log('==========================================')
 
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.formTitle}>Ad Details</Text>
+        <View style={[
+          styles.imageUploadContainer,
+          selectedImages.length > 0 && styles.imageUploadContainerWithImages
+        ]}>
+          {selectedImages.length === 0 ? (
+            // Show upload button when no images
+            <>
+              <TouchableOpacity 
+                style={styles.addImagesButton}
+                activeOpacity={0.8}
+                onPress={() => setShowImageOptions(true)}
+              >
+                <Text style={styles.addImagesButtonText}>Add Images</Text>
+              </TouchableOpacity>
+              <Text style={styles.imageUploadHint}>
+                5MB maximum file size accepted in the following formats: .jpg, .jpeg, .png, .gif
+              </Text>
+            </>
+          ) : (
+            // Show images grid when images are selected
+            <>
+              <View style={styles.imagesGrid}>
+                {selectedImages.map((image, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.imageItem}
+                    onPress={() => handleRemoveImage(index)}
+                    activeOpacity={0.8}
+                  >
+                    <Image 
+                      source={{ uri: image.uri }} 
+                      style={styles.imagePreview}
+                      resizeMode="cover"
+                    />
+                  </TouchableOpacity>
+                ))}
+                
+                {/* Add more images button */}
+                {selectedImages.length < 10 && (
+                  <TouchableOpacity
+                    style={styles.addMoreImagesButton}
+                    onPress={() => setShowImageOptions(true)}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.addMoreImagesText}>+</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              
+              <Text style={styles.deleteImageHint}>
+                To delete an image press on it
+              </Text>
+            </>
+          )}
+        </View>
+        
         {visibleFields.map(renderField)}
       </View>
     )
@@ -300,7 +378,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} title={category.nameShort || category.name} />
+      <Header navigation={navigation} title={'Ad Details'} />
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -313,6 +391,85 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
           <Text style={styles.submitButtonText}>Continue</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* Image Options Modal */}
+      <Modal
+        visible={showImageOptions}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowImageOptions(false)}
+      >
+        <TouchableOpacity 
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setShowImageOptions(false)}
+        >
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Add Image</Text>
+            
+            <TouchableOpacity 
+              style={styles.modalOption}
+              onPress={handleTakePhoto}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.modalOptionText}>Take Photo</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={styles.modalOption}
+              onPress={handlePickFromGallery}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.modalOptionText}>Pick from Gallery</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={[styles.modalOption, styles.modalCancelOption]}
+              onPress={() => setShowImageOptions(false)}
+              activeOpacity={0.8}
+            >
+              <Text style={[styles.modalOptionText, styles.modalCancelText]}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        visible={showDeleteConfirm}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={cancelDeleteImage}
+      >
+        <TouchableOpacity 
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={cancelDeleteImage}
+        >
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Delete Image</Text>
+            <Text style={styles.deleteConfirmText}>
+              Are you sure you want to delete this image?
+            </Text>
+            
+            <TouchableOpacity 
+              style={[styles.modalOption, styles.deleteButton]}
+              onPress={confirmDeleteImage}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.modalOptionText}>Delete</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={[styles.modalOption, styles.modalCancelOption]}
+              onPress={cancelDeleteImage}
+              activeOpacity={0.8}
+            >
+              <Text style={[styles.modalOptionText, styles.modalCancelText]}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </View>
   )
 }
@@ -405,6 +562,136 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     color: colors.text_gray,
     marginTop: 8,
+  },
+  imageUploadContainer: {
+    minHeight: 200,
+    backgroundColor: colors.background_dark,
+    borderWidth: 2,
+    borderColor: '#fff',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  imageUploadContainerWithImages: {
+    minHeight: 'auto',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+  },
+  imagesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+    marginBottom: 12,
+  },
+  imageItem: {
+    width: 100,
+    height: 100,
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  imagePreview: {
+    width: '100%',
+    height: '100%',
+  },
+  addMoreImagesButton: {
+    width: 100,
+    height: 100,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: '#fff',
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  addMoreImagesText: {
+    fontSize: 40,
+    fontFamily: fonts.semiBold,
+    color: '#fff',
+  },
+  addImagesButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 32,
+    paddingVertical: 12,
+    borderRadius: 6,
+    marginBottom: 12,
+  },
+  addImagesButtonText: {
+    fontSize: 14,
+    fontFamily: fonts.semiBold,
+    color: colors.background_dark,
+  },
+  imageUploadHint: {
+    fontSize: 11,
+    fontFamily: fonts.regular,
+    color: '#fff',
+    textAlign: 'center',
+    lineHeight: 16,
+  },
+  deleteImageHint: {
+    fontSize: 11,
+    fontFamily: fonts.regular,
+    color: '#fff',
+    textAlign: 'center',
+    lineHeight: 16,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: colors.background_dark,
+    borderRadius: 12,
+    width: '100%',
+    maxWidth: 400,
+    padding: 20,
+    borderWidth: 2,
+    borderColor: '#fff',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontFamily: fonts.bold,
+    color: colors.text_dark,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  modalOption: {
+    backgroundColor: colors.primary,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginBottom: 12,
+    alignItems: 'center',
+  },
+  modalCancelOption: {
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: '#fff',
+    marginTop: 8,
+  },
+  modalOptionText: {
+    fontSize: 16,
+    fontFamily: fonts.semiBold,
+    color: colors.background_dark,
+  },
+  modalCancelText: {
+    color: '#fff',
+  },
+  deleteConfirmText: {
+    fontSize: 14,
+    fontFamily: fonts.regular,
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  deleteButton: {
+    backgroundColor: '#E53935',
   },
 })
 
