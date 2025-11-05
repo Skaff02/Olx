@@ -3,6 +3,7 @@ import React from 'react'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import fonts from '../theme/fonts';
 import colors from '../theme/colors';
+import Header from '../components/home/Header';
 
 const Home = () => {
 
@@ -12,7 +13,7 @@ const Home = () => {
         <View style={[styles.container, {
             paddingTop: insets.top,
         }]}>
-            
+            <Header />
         </View>
     )
 }
@@ -23,5 +24,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.background_dark,
+        paddingHorizontal: 16
     },
 })

@@ -1,8 +1,8 @@
 const fonts = { 
-    regular: 'RobotoCondensed-Regular',
-    medium: 'RobotoCondensed-Medium',
-    semiBold: 'RobotoCondensed-SemiBold',
-    bold: 'RobotoCondensed-Bold'
+    regular: 'ElmsSans-Regular',
+    medium: 'ElmsSans-Medium',
+    semiBold: 'ElmsSans-SemiBold',
+    bold: 'ElmsSans-Bold'
 }
 
 export default fonts;

@@ -5,6 +5,7 @@ import Home from '../screens/Home'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Sell from '../screens/Sell'
 import colors from '../theme/colors'
+import Profile from '../screens/Profile'
 
 const Tab = createBottomTabNavigator()
 
@@ -37,6 +38,7 @@ const TabsNavigation = () => {
                 >   
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Sell" component={Sell} />
+        <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   )
 }
