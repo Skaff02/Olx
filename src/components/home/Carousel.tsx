@@ -71,6 +71,7 @@ const Carousel = () => {
         showsHorizontalScrollIndicator={false}
         onScroll={onScroll}
         scrollEventThrottle={16}
+        bounces={false}
         onScrollToIndexFailed={info => {
           const wait = new Promise(resolve => setTimeout(() => resolve(undefined), 500));
           wait.then(() => {

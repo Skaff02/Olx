@@ -4,6 +4,7 @@ const colors = {
     secondary: "#a74a37", //Used for the price
     text_dark: "#fff",
     border_dark: "#35373b",
+    see_all_text_dark: "#ceddff",
 
     background_light: "#fff", //Used for light mode
     text_light: "#13151c",
