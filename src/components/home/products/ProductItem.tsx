@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         color: colors.text_gray,
     },
     locationSection: { 
-        paddingVertical: 6
+        paddingTop: 6
     },
     locationText: {
         fontSize: 12,
