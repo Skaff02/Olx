@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.semiBold,
     color: colors.text_dark,
     marginBottom: 8,
+    textAlign: 'left',
   },
   required: {
     color: colors.secondary,

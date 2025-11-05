@@ -8,11 +8,13 @@ import SectionHeader from '../../components/home/shared/SectionHeader';
 import Categories from '../../components/home/categories/Categories';
 import HorizontalProducts from '../../components/home/products/HorizontalProducts';
 import Header from '../../components/home/header/Header';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
     const insets = useSafeAreaInsets();
+    const { t } = useTranslation();
 
-    const [location, setLocation] = useState<string>('Lebanon');
+    const [location, setLocation] = useState<string>(t('home.location'));
     const [categories, setCategories] = useState<{ id: string, name: string, image: string }[]>([
         { id: '1', name: 'Vehicles', image: 'https://www.olx.com.lb/assets/vehicles.74fb4e1f768784288a0c358372fe3f8b.png' },
         { id: '2', name: 'Properties', image: 'https://www.olx.com.lb/assets/property.d5813812616778f179963565f8a533ca.png' },
@@ -289,12 +291,12 @@ const Home = () => {
             <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 16}} contentContainerStyle={{paddingBottom: 16}} bounces={false}>
                 <Carousel />
                 <Categories categories={categories} />
-                <HorizontalProducts data={mobilePhones} title="Mobile Phones" />
+                <HorizontalProducts data={mobilePhones} title={t('home.mobilePhones')} />
                 <View style={{ marginTop: 5 }}>
-                    <HorizontalProducts data={cars} title="Cars for Sale" />
+                    <HorizontalProducts data={cars} title={t('home.carsForSale')} />
                 </View>
                 <View style={{ marginTop: 5 }}>
-                    <HorizontalProducts data={properties} title="Properties for Sale" />
+                    <HorizontalProducts data={properties} title={t('home.propertiesForSale')} />
                 </View>
             </ScrollView>
         </View>

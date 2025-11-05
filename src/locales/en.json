@@ -1,0 +1,38 @@
+{
+  "home": {
+    "location": "Lebanon",
+    "categories": "Categories",
+    "mobilePhones": "Mobile Phones",
+    "carsForSale": "Cars for Sale",
+    "propertiesForSale": "Properties for Sale",
+    "seeAll": "See all",
+    "searchPlaceholder": "What are you looking for?"
+  },
+  "profile": {
+    "title": "Profile",
+    "language": "Language",
+    "selectLanguage": "Select your preferred language",
+    "english": "English",
+    "arabic": "Arabic"
+  },
+  "sell": {
+    "whatAreYouOffering": "What are you offering?",
+    "popular": "Popular",
+    "others": "Others",
+    "adDetails": "Ad Details",
+    "addImages": "Add Images",
+    "imageUploadHint": "5MB maximum file size accepted in the following formats: .jpg, .jpeg, .png, .gif",
+    "deleteImageHint": "To delete an image press on it",
+    "continue": "Continue",
+    "addImageTitle": "Add Image",
+    "takePhoto": "Take Photo",
+    "pickFromGallery": "Pick from Gallery",
+    "cancel": "Cancel",
+    "deleteImageTitle": "Delete Image",
+    "deleteImageConfirm": "Are you sure you want to delete this image?",
+    "delete": "Delete",
+    "enterField": "Enter",
+    "selectField": "Select"
+  }
+}
+

@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import CategoryService from '../../service/CategoryService'
 import CategoryItem from '../../components/sell/CategoryItem'
 import CategorySectionHeader from '../../components/sell/CategorySectionHeader'
+import { useTranslation } from 'react-i18next'
 
 // Category images mapping
 const CATEGORY_IMAGES: { [key: string]: string } = {
@@ -33,6 +34,7 @@ const CATEGORY_IMAGES: { [key: string]: string } = {
 const CreateAd = () => {
   const navigation = useNavigation<any>()
   const insets = useSafeAreaInsets()
+  const { t } = useTranslation()
 
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -74,7 +76,7 @@ const CreateAd = () => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.closeButton}>
           <Text style={styles.closeText}>✕</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>What are you offering?</Text>
+        <Text style={styles.title}>{t('sell.whatAreYouOffering')}</Text>
       </View>
       
       {loading ? (
@@ -84,9 +86,9 @@ const CreateAd = () => {
       ) : (
         <FlatList
           data={[
-            { type: 'section' as const, title: 'Popular' },
+            { type: 'section' as const, title: t('sell.popular') },
             ...popularCategories.map(cat => ({ type: 'item' as const, data: cat })),
-            { type: 'section' as const, title: 'Others' },
+            { type: 'section' as const, title: t('sell.others') },
             ...otherCategories.map(cat => ({ type: 'item' as const, data: cat })),
           ]}
           renderItem={({ item }: any) => {
@@ -142,6 +144,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingVertical: 8,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
 })

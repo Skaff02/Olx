@@ -59,13 +59,15 @@ export default SelectInput
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    marginBottom: 20
   },
   label: {
     fontSize: 14,
     fontFamily: fonts.semiBold,
     color: colors.text_dark,
     marginBottom: 8,
+    textAlign: 'left',
+    backgroundColor: 'red',
   },
   required: {
     color: colors.secondary,
@@ -80,12 +82,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    textAlign: 'left',
+    width: '100%',
   },
   selectorText: {
     fontSize: 14,
     fontFamily: fonts.regular,
     color: colors.text_dark,
     flex: 1,
+    textAlign: 'left',
   },
   placeholder: {
     color: '#fff',

@@ -2,12 +2,14 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import SectionHeader from '../shared/SectionHeader'
 import CategoryItem from './CategoryItem'
+import { useTranslation } from 'react-i18next'
 
 const Categories = ({ categories }: { categories: { id: string, name: string, image: string }[] }) => {
+    const { t } = useTranslation()
     
   return (
     <View>
-        <SectionHeader title="All Categories" />  
+        <SectionHeader title={t('home.categories')} />  
         <View style={{marginTop: 16}}>
             <FlatList
                 data={categories}

@@ -1,0 +1,38 @@
+{
+  "home": {
+    "location": "لبنان",
+    "categories": "الفئات",
+    "mobilePhones": "الهواتف المحمولة",
+    "carsForSale": "سيارات للبيع",
+    "propertiesForSale": "عقارات للبيع",
+    "seeAll": "عرض الكل",
+    "searchPlaceholder": "عما تبحث؟"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "language": "اللغة",
+    "selectLanguage": "اختر لغتك المفضلة",
+    "english": "الإنجليزية",
+    "arabic": "العربية"
+  },
+  "sell": {
+    "whatAreYouOffering": "ماذا تعرض؟",
+    "popular": "شائع",
+    "others": "أخرى",
+    "adDetails": "تفاصيل الإعلان",
+    "addImages": "إضافة صور",
+    "imageUploadHint": "الحد الأقصى لحجم الملف 5 ميغابايت بالتنسيقات التالية: .jpg, .jpeg, .png, .gif",
+    "deleteImageHint": "لحذف صورة اضغط عليها",
+    "continue": "متابعة",
+    "addImageTitle": "إضافة صورة",
+    "takePhoto": "التقاط صورة",
+    "pickFromGallery": "اختيار من المعرض",
+    "cancel": "إلغاء",
+    "deleteImageTitle": "حذف الصورة",
+    "deleteImageConfirm": "هل أنت متأكد من حذف هذه الصورة؟",
+    "delete": "حذف",
+    "enterField": "أدخل",
+    "selectField": "اختر"
+  }
+}
+

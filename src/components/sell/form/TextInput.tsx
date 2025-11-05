@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TextInput as RNTextInput, View } from 'react-native'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import colors from '../../../theme/colors'
 import fonts from '../../../theme/fonts'
 
@@ -13,6 +14,9 @@ interface TextInputProps {
 }
 
 const TextInput = ({ label, value, onChangeText, placeholder, keyboardType = 'default', required }: TextInputProps) => {
+  const { i18n } = useTranslation()
+  const isArabic = i18n.language === 'ar'
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>
@@ -20,7 +24,7 @@ const TextInput = ({ label, value, onChangeText, placeholder, keyboardType = 'de
         {required && <Text style={styles.required}> *</Text>}
       </Text>
       <RNTextInput
-        style={styles.input}
+        style={[styles.input, { textAlign: isArabic ? 'right' : 'left' }]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.semiBold,
     color: colors.text_dark,
     marginBottom: 8,
+    textAlign: 'left',
   },
   required: {
     color: colors.secondary,
@@ -56,6 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fonts.regular,
     color: colors.text_dark,
+    width: '100%',
   },
 })
 

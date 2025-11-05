@@ -5,6 +5,7 @@ import fonts from '../../theme/fonts'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Header from '../../components/shared/Header'
 import { SvgXml } from 'react-native-svg'
+import { useTranslation } from 'react-i18next'
 
 interface Choice {
   value: string
@@ -17,6 +18,9 @@ const ChoiceSelection = ({ navigation, route }: { navigation: any, route: any })
   const insets = useSafeAreaInsets()
   const [searchQuery, setSearchQuery] = useState('')
   const [tempSelectedValues, setTempSelectedValues] = useState<string[]>(selectedValues || [])
+
+  const { i18n } = useTranslation()
+  const isArabic = i18n.language === 'ar'
 
   console.log('ChoiceSelection - choices:', choices)
   console.log('ChoiceSelection - fieldName:', fieldName)
@@ -61,7 +65,7 @@ const ChoiceSelection = ({ navigation, route }: { navigation: any, route: any })
       activeOpacity={0.8}
       onPress={() => handleSelect(item)}
     >
-      <Text style={styles.choiceText}>
+      <Text style={[styles.choiceText]}>
         {item.label}
       </Text>
       {isSelected(item.value) && (
@@ -79,10 +83,10 @@ const ChoiceSelection = ({ navigation, route }: { navigation: any, route: any })
       <View style={styles.searchContainer}>
         <SvgXml xml={SearchIcon} height={20} />
         <TextInput
-          style={styles.searchInput}
+          style={[styles.searchInput, { textAlign: isArabic ? 'right' : 'left' }]}
           value={searchQuery}
           onChangeText={setSearchQuery}
-          placeholder="Search..."
+          placeholder={isArabic ? 'ابحث...' : 'Search...'}
           placeholderTextColor={colors.text_gray}
         />
       </View>
@@ -154,6 +158,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.medium,
     color: colors.text_dark,
     flex: 1,
+    textAlign: 'left',
   },
   separator: {
     height: 1,
@@ -171,6 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.background_dark,
     fontFamily: fonts.bold,
+    textAlign: 'left',
   },
   footer: {
     padding: 16,

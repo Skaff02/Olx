@@ -3,11 +3,17 @@ import React from 'react'
 import colors from '../../theme/colors'
 import Header from '../../components/shared/Header'
 import SubCategoryItem from '../../components/sell/SubCategoryItem'
+import { useTranslation } from 'react-i18next'
 
 const SubCategories = ({navigation, route}: {navigation: any, route: any}) => {
 
   const { category } = route.params
   const subCategories = category.children || []
+
+  const { i18n } = useTranslation()
+  const isArabic = i18n.language === 'ar'
+  
+  const displayName = isArabic && category.name_l1 ? category.name_l1 : (category.nameShort || category.name)
 
   const handleSubCategoryPress = (item: any) => {
     if (item.children && item.children.length > 0) {
@@ -19,7 +25,7 @@ const SubCategories = ({navigation, route}: {navigation: any, route: any}) => {
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} title={category.nameShort || category.name} />
+      <Header navigation={navigation} title={displayName} />
       
       <FlatList
         data={subCategories}

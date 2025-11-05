@@ -3,8 +3,10 @@ import React from 'react'
 import { SvgXml } from 'react-native-svg'
 import fonts from '../../../theme/fonts'
 import colors from '../../../theme/colors'
+import { useTranslation } from 'react-i18next'
 
 const Header = ({ location }: { location: string }) => {
+  const { t } = useTranslation()
   return (
     <View style={styles.container}>
         <View style={styles.upperContainer}>
@@ -21,7 +23,7 @@ const Header = ({ location }: { location: string }) => {
         </View>
         <TouchableOpacity style={styles.searchContainer} activeOpacity={0.8}>
             <SvgXml xml={SearchIcon} height={20} />
-            <Text style={styles.searchText}>What are you looking for?</Text>
+            <Text style={styles.searchText}>{t('home.searchPlaceholder')}</Text>
         </TouchableOpacity>
     </View>
   )

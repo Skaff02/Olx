@@ -2,13 +2,16 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import fonts from '../../../theme/fonts'
 import colors from '../../../theme/colors'
+import { useTranslation } from 'react-i18next'
 
 const SectionHeader = ({ title }: { title: string }) => {
+  const { t } = useTranslation()
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity activeOpacity={0.8}>
-        <Text style={styles.seeAllText}>See All</Text>
+        <Text style={styles.seeAllText}>{t('home.seeAll')}</Text>
       </TouchableOpacity>
     </View>
   )

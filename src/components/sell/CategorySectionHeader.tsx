@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.bold,
     color: colors.text_dark,
+    textAlign: 'left',
   },
 })
 

@@ -9,9 +9,12 @@ import HorizontalChoice from '../../components/sell/form/HorizontalChoice'
 import Header from '../../components/shared/Header'
 import { SvgXml } from 'react-native-svg'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
+import { useTranslation } from 'react-i18next'
 
 const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
   const { category } = route.params
+  const { t, i18n } = useTranslation()
+  const isArabic = i18n.language === 'ar'
   const [categoryFields, setCategoryFields] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [formData, setFormData] = useState<any>({})
@@ -30,6 +33,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
       const categorySlug = category.slug || ''
       
       const response = await CategoryFieldsService.getCategoryFields(categorySlug)
+      console.log('response', response)
       
       if (response.status === 200) {
         
@@ -140,18 +144,19 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
   }
 
   const renderField = (field: any) => {
-    const { id, valueType, attribute, name, choices, roles, filterType } = field
+    const { id, valueType, attribute, name, name_l1, choices, roles, filterType } = field
     const isRequired = roles?.includes('required')
+    const displayName = isArabic && name_l1 ? name_l1 : name
 
     switch (valueType) {
       case 'string':
         return (
           <TextInput
             key={id}
-            label={name}
+            label={displayName}
             value={formData[attribute] || ''}
             onChangeText={(value) => setFormData({ ...formData, [attribute]: value })}
-            placeholder={`Enter ${name.toLowerCase()}`}
+            placeholder={`${t('sell.enterField')} ${displayName.toLowerCase()}`}
             required={isRequired}
           />
         )
@@ -161,10 +166,10 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
         return (
           <TextInput
             key={id}
-            label={name}
+            label={displayName}
             value={formData[attribute] || ''}
             onChangeText={(value) => setFormData({ ...formData, [attribute]: value })}
-            placeholder={`Enter ${name.toLowerCase()}`}
+            placeholder={`${t('sell.enterField')} ${displayName.toLowerCase()}`}
             keyboardType="decimal-pad"
             required={isRequired}
           />
@@ -176,7 +181,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
           .map((val: string) => choices?.find((c: any) => c.value === val)?.label)
           .filter(Boolean)
         
-        let displayText = `Select ${name.toLowerCase()}`
+        let displayText = `${t('sell.selectField')} ${displayName.toLowerCase()}`
         if (selectedLabels.length > 0) {
           if (selectedLabels.length <= 2) {
             displayText = selectedLabels.join(', ')
@@ -190,14 +195,14 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
         return (
           <View key={id} style={styles.fieldContainer}>
             <Text style={styles.fieldLabel}>
-              {name}
+              {displayName}
               {isRequired && <Text style={styles.required}> *</Text>}
             </Text>
             <TouchableOpacity
               style={styles.multipleChoiceButton}
               onPress={() => navigation.navigate('ChoiceSelection', {
                 choices: choices || [],
-                fieldName: name,
+                fieldName: displayName,
                 selectedValues: selectedValues,
                 multiSelect: true,
                 onSelect: (values: string[]) => {
@@ -216,7 +221,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
               >
                 {displayText}
               </Text>
-              <SvgXml xml={ArrowRightIcon} height={14} />
+              <SvgXml xml={isArabic ? ArrowLeftIcon : ArrowRightIcon} height={14} />
             </TouchableOpacity>
           </View>
         )
@@ -228,7 +233,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
           return (
             <HorizontalChoice
               key={id}
-              label={name}
+              label={displayName}
               value={formData[attribute] || ''}
               onValueChange={(value) => setFormData({ ...formData, [attribute]: value })}
               choices={choices || []}
@@ -241,7 +246,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
           return (
             <View key={id} style={styles.fieldContainer}>
               <Text style={styles.fieldLabel}>
-                {name}
+                {displayName}
                 {isRequired && <Text style={styles.required}> *</Text>}
               </Text>
               <TouchableOpacity
@@ -253,9 +258,9 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
                   styles.multipleChoiceText,
                   !selectedChoice && styles.placeholderText
                 ]}>
-                  {selectedChoice ? selectedChoice.label : `Select ${name.toLowerCase()}`}
+                  {selectedChoice ? selectedChoice.label : `${t('sell.selectField')} ${displayName.toLowerCase()}`}
                 </Text>
-                <SvgXml xml={ArrowRightIcon} height={14} />
+                <SvgXml xml={isArabic ? ArrowLeftIcon : ArrowRightIcon} height={14} />
               </TouchableOpacity>
             </View>
           )
@@ -264,11 +269,11 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
         return (
           <SelectInput
             key={id}
-            label={name}
+            label={displayName}
             value={formData[attribute] || ''}
             onValueChange={(value) => setFormData({ ...formData, [attribute]: value })}
             choices={choices || []}
-            placeholder={`Select ${name.toLowerCase()}`}
+            placeholder={`${t('sell.selectField')} ${displayName.toLowerCase()}`}
             required={isRequired}
           />
         )
@@ -316,10 +321,10 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
                 activeOpacity={0.8}
                 onPress={() => setShowImageOptions(true)}
               >
-                <Text style={styles.addImagesButtonText}>Add Images</Text>
+                <Text style={styles.addImagesButtonText}>{t('sell.addImages')}</Text>
               </TouchableOpacity>
               <Text style={styles.imageUploadHint}>
-                5MB maximum file size accepted in the following formats: .jpg, .jpeg, .png, .gif
+                {t('sell.imageUploadHint')}
               </Text>
             </>
           ) : (
@@ -354,7 +359,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
               </View>
               
               <Text style={styles.deleteImageHint}>
-                To delete an image press on it
+                {t('sell.deleteImageHint')}
               </Text>
             </>
           )}
@@ -378,7 +383,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} title={'Ad Details'} />
+      <Header navigation={navigation} title={t('sell.adDetails')} />
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -388,7 +393,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
         {renderForm()}
         
         <TouchableOpacity style={styles.submitButton} activeOpacity={0.8}>
-          <Text style={styles.submitButtonText}>Continue</Text>
+          <Text style={styles.submitButtonText}>{t('sell.continue')}</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -405,14 +410,14 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
           onPress={() => setShowImageOptions(false)}
         >
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Add Image</Text>
+            <Text style={styles.modalTitle}>{t('sell.addImageTitle')}</Text>
             
             <TouchableOpacity 
               style={styles.modalOption}
               onPress={handleTakePhoto}
               activeOpacity={0.8}
             >
-              <Text style={styles.modalOptionText}>Take Photo</Text>
+              <Text style={styles.modalOptionText}>{t('sell.takePhoto')}</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
@@ -420,7 +425,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
               onPress={handlePickFromGallery}
               activeOpacity={0.8}
             >
-              <Text style={styles.modalOptionText}>Pick from Gallery</Text>
+              <Text style={styles.modalOptionText}>{t('sell.pickFromGallery')}</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
@@ -428,7 +433,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
               onPress={() => setShowImageOptions(false)}
               activeOpacity={0.8}
             >
-              <Text style={[styles.modalOptionText, styles.modalCancelText]}>Cancel</Text>
+              <Text style={[styles.modalOptionText, styles.modalCancelText]}>{t('sell.cancel')}</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -447,9 +452,9 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
           onPress={cancelDeleteImage}
         >
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Delete Image</Text>
+            <Text style={styles.modalTitle}>{t('sell.deleteImageTitle')}</Text>
             <Text style={styles.deleteConfirmText}>
-              Are you sure you want to delete this image?
+              {t('sell.deleteImageConfirm')}
             </Text>
             
             <TouchableOpacity 
@@ -457,7 +462,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
               onPress={confirmDeleteImage}
               activeOpacity={0.8}
             >
-              <Text style={styles.modalOptionText}>Delete</Text>
+              <Text style={styles.modalOptionText}>{t('sell.delete')}</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
@@ -465,7 +470,7 @@ const AdDetails = ({ navigation, route }: { navigation: any, route: any }) => {
               onPress={cancelDeleteImage}
               activeOpacity={0.8}
             >
-              <Text style={[styles.modalOptionText, styles.modalCancelText]}>Cancel</Text>
+              <Text style={[styles.modalOptionText, styles.modalCancelText]}>{t('sell.cancel')}</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -533,11 +538,13 @@ const styles = StyleSheet.create({
     fontFamily: fonts.semiBold,
     color: colors.text_dark,
     marginBottom: 8,
+    textAlign: 'left',
   },
   required: {
     color: colors.secondary,
   },
   multipleChoiceButton: {
+    width: '100%',
     backgroundColor: colors.background_dark,
     borderWidth: 2,
     borderColor: '#fff',
@@ -553,6 +560,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     color: colors.text_dark,
     flex: 1,
+    textAlign: 'left',
   },
   placeholderText: {
     color: '#fff',
@@ -697,5 +705,10 @@ const styles = StyleSheet.create({
 
 const ArrowRightIcon = `<svg width="9" height="17" viewBox="0 0 9 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0.75 0.75L8.25 8.25L0.75 15.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+const ArrowLeftIcon = `<svg width="9" height="17" viewBox="0 0 9 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.25 0.75L0.75 8.25L8.25 15.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
